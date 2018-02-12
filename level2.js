@@ -118,39 +118,47 @@ export default function() {
   const ex1 =
     'Use map to return a concatenated first and last name of each client.'
   const exercise1 = _ => {
-    return []
+    return map(c=>c.name.firstName+' '+c.name.lastName,clients)
   }
 
   const ex2 = 'Use filter to return clients from Wyoming'
   const exercise2 = _ => {
-    return []
+    return filter(c=>c.address.state==='Wyoming',clients)
   }
 
   const ex3 = 'Use reduce to count the number of people with green eyes '
   const exercise3 = _ => {
-    return 0
+    return reduce((acc,c)=>c.eyeColor === 'green'?acc+1:acc,0,clients)
   }
 
   const ex4 = `Use map, filter and reduce with compose to return the full name (as a string) of the female from Wyoming. `
   const exercise4 = _ => {
-    return null
+    return compose(
+      reduce((acc,c)=>acc+c,''),
+      map(c=>c.name.firstName+' '+c.name.lastName),
+      filter(c=>c.address.state==='Wyoming'&& c.gender==='female')
+    )(clients)
   }
 
   const ex5 =
     'Use map and filter to return the full address of the clients living in North Carolina'
   const exercise5 = _ => {
-    return []
+    return map(c=>c.address.street+' '+c.address.city+', '+c.address.state+' '+c.address.zip,
+      filter(c=>c.address.state==='North Carolina',clients))
   }
 
   const ex6 = 'use filter to remove anyone over the age of 25'
   const exercise6 = _ => {
-    return []
+    return filter(c=>c.age<=25,clients)
   }
 
   const ex7 =
     'use reduce to count the number of males, age 22 - 27, who have green eyes'
   const exercise7 = _ => {
-    return 0
+    return reduce((acc,c)=>
+    c.age>=22 && c.age <=27 && c.eyeColor==='green'&&c.gender==='male'?
+    acc+1:acc,
+    0,clients)
   }
 
   /* tests to validate exercises go here */
